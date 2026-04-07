@@ -1,35 +1,59 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   purchaseAction,
   type PurchaseActionState,
 } from "@/app/products/actions";
 import { COURSES } from "@/lib/constants/courses";
+import {
+  purchaseFormSchema,
+  type PurchaseFormInput,
+} from "@/lib/validation/purchase";
 
 const initialState: PurchaseActionState = { status: "idle" };
 
 export function PurchaseForm() {
-  const [state, formAction, pending] = useActionState(
-    purchaseAction,
-    initialState,
-  );
+  const [state, formAction] = useActionState(purchaseAction, initialState);
+  const [pending, startTransition] = useTransition();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PurchaseFormInput>({
+    resolver: zodResolver(purchaseFormSchema),
+    mode: "onTouched",
+  });
+
+  const onSubmit = handleSubmit((data) => {
+    const formData = new FormData();
+    formData.set("courseId", data.courseId);
+    formData.set("parentEmail", data.parentEmail);
+    startTransition(() => formAction(formData));
+  });
 
   return (
-    <form action={formAction} className="w-full min-w-0 space-y-8">
+    <form onSubmit={onSubmit} className="w-full min-w-0 space-y-8">
       <fieldset className="space-y-4 border-0 p-0">
         <legend className="text-sm font-medium text-foreground">
           Select a course
         </legend>
+        {errors.courseId && (
+          <p className="text-sm text-red-600" role="alert">
+            {errors.courseId.message}
+          </p>
+        )}
         <ul className="grid gap-4 sm:grid-cols-1">
           {COURSES.map((course) => (
             <li key={course.id}>
               <label className="group block cursor-pointer">
                 <input
                   type="radio"
-                  name="courseId"
                   value={course.id}
-                  required
+                  {...register("courseId")}
                   className="sr-only"
                 />
                 <div className="relative rounded-2xl border border-border bg-card p-6 shadow-sm transition hover:border-primary/35 focus-within:ring-2 focus-within:ring-brand/35 group-has-[:checked]:border-primary group-has-[:checked]:ring-2 group-has-[:checked]:ring-brand/25 group-has-[:checked]:shadow-md">
@@ -77,13 +101,18 @@ export function PurchaseForm() {
           </label>
           <input
             id="parentEmail"
-            name="parentEmail"
             type="email"
-            required
             autoComplete="email"
             placeholder="parent@example.com"
-            className="mt-2 w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-brand/35"
+            aria-invalid={errors.parentEmail ? "true" : undefined}
+            className="mt-2 w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-brand/35 aria-invalid:border-red-500"
+            {...register("parentEmail")}
           />
+          {errors.parentEmail && (
+            <p className="mt-1 text-sm text-red-600" role="alert">
+              {errors.parentEmail.message}
+            </p>
+          )}
         </div>
 
         {state.status === "error" && (

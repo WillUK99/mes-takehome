@@ -1,35 +1,60 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import {
   completeOnboardingAction,
   type OnboardingActionState,
 } from "@/app/onboarding/[token]/actions";
+import {
+  onboardingFormSchema,
+  type OnboardingFormInput,
+} from "@/lib/validation/onboarding";
 
 const initial: OnboardingActionState = { status: "idle" };
 
 export function OnboardingForm({ token }: { token: string }) {
   const boundAction = completeOnboardingAction.bind(null, token);
-  const [state, formAction, pending] = useActionState(
-    boundAction,
-    initial,
-  );
+  const [state, formAction] = useActionState(boundAction, initial);
+  const [pending, startTransition] = useTransition();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<OnboardingFormInput>({
+    resolver: zodResolver(onboardingFormSchema),
+    mode: "onTouched",
+  });
+
+  const onSubmit = handleSubmit((data) => {
+    const formData = new FormData();
+    formData.set("name", data.name);
+    formData.set("password", data.password);
+    startTransition(() => formAction(formData));
+  });
 
   return (
-    <form action={formAction} className="space-y-6">
+    <form onSubmit={onSubmit} className="space-y-6">
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-foreground">
           Your name
         </label>
         <input
           id="name"
-          name="name"
           type="text"
-          required
           autoComplete="name"
-          className="mt-2 w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-brand/35"
+          aria-invalid={errors.name ? "true" : undefined}
+          className="mt-2 w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-brand/35 aria-invalid:border-red-500"
+          {...register("name")}
         />
+        {errors.name && (
+          <p className="mt-1 text-sm text-red-600" role="alert">
+            {errors.name.message}
+          </p>
+        )}
       </div>
       <div>
         <label
@@ -40,12 +65,17 @@ export function OnboardingForm({ token }: { token: string }) {
         </label>
         <input
           id="password"
-          name="password"
           type="password"
-          required
           autoComplete="new-password"
-          className="mt-2 w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-brand/35"
+          aria-invalid={errors.password ? "true" : undefined}
+          className="mt-2 w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-brand/35 aria-invalid:border-red-500"
+          {...register("password")}
         />
+        {errors.password && (
+          <p className="mt-1 text-sm text-red-600" role="alert">
+            {errors.password.message}
+          </p>
+        )}
       </div>
 
       {state.status === "error" && (
