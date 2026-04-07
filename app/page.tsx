@@ -35,9 +35,6 @@ export default async function Home() {
         >
           Parent: browse courses
         </Link>
-        <p className="text-sm text-muted-foreground sm:max-w-xs">
-          Students: use the invitation link from email (terminal log in dev).
-        </p>
       </div>
     </div>
   );
