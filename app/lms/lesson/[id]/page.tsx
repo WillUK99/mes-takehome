@@ -11,25 +11,31 @@ export default async function LessonPage({ params }: PageProps) {
   if (!lesson) notFound();
 
   return (
-    <article className="space-y-6">
-      <p className="text-sm text-zinc-500">
-        <Link href="/lms" className="font-medium text-zinc-700 hover:text-zinc-900">
+    <article className="space-y-10">
+      <p className="text-sm text-muted-foreground">
+        <Link
+          href="/lms"
+          className="font-medium text-foreground transition hover:text-brand"
+        >
           ← Lessons
         </Link>
       </p>
-      <header>
-        <h1 className="text-2xl font-semibold text-zinc-900">
+      <header className="space-y-3">
+        <h1 className="text-2xl font-semibold text-foreground">
           {lesson.title}
         </h1>
-        <p className="mt-2 text-zinc-600">{lesson.summary}</p>
+        <p className="text-muted-foreground">{lesson.summary}</p>
       </header>
-      <div className="rounded-xl border border-zinc-200 bg-white p-6 text-sm leading-relaxed text-zinc-700">
+      <div className="rounded-2xl border border-border bg-card p-8 text-sm leading-relaxed text-muted-foreground">
         <p>
           This is placeholder lesson content for the prototype. In a real LMS
           this would include videos, readings, and activities.
         </p>
-        <p className="mt-4">
-          Lesson ID: <code className="rounded bg-zinc-100 px-1.5 py-0.5">{id}</code>
+        <p className="mt-5">
+          Lesson ID:{" "}
+          <code className="rounded-lg bg-muted px-2 py-1 font-mono text-xs text-foreground">
+            {id}
+          </code>
         </p>
       </div>
       <LessonCompletePanel lessonId={id} lessonTitle={lesson.title} />

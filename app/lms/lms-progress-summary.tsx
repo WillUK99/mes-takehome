@@ -13,26 +13,26 @@ export function LmsProgressSummary() {
 
   return (
     <section
-      className="rounded-xl border border-zinc-200 bg-white p-5"
+      className="rounded-2xl border border-border bg-card p-7"
       aria-labelledby="progress-heading"
     >
       <h2
         id="progress-heading"
-        className="text-lg font-medium text-zinc-900"
+        className="text-lg font-medium text-card-foreground"
       >
         Your progress
       </h2>
-      <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <span className="text-3xl font-semibold tabular-nums text-zinc-900">
+      <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-2">
+        <span className="text-3xl font-semibold tabular-nums text-card-foreground">
           {completed}
         </span>
-        <span className="text-zinc-500">/</span>
-        <span className="text-xl tabular-nums text-zinc-600">{total}</span>
-        <span className="text-sm text-zinc-500">lessons completed</span>
+        <span className="text-muted-foreground">/</span>
+        <span className="text-xl tabular-nums text-muted-foreground">{total}</span>
+        <span className="text-sm text-muted-foreground">lessons completed</span>
       </div>
-      <div className="mt-3">
+      <div className="mt-4">
         <div
-          className="h-2 overflow-hidden rounded-full bg-zinc-100"
+          className="h-2 overflow-hidden rounded-full bg-muted"
           role="progressbar"
           aria-valuenow={pct}
           aria-valuemin={0}
@@ -40,12 +40,12 @@ export function LmsProgressSummary() {
           aria-label="Course completion"
         >
           <div
-            className="h-full rounded-full bg-emerald-600 transition-[width] duration-300 ease-out"
+            className="h-full rounded-full bg-primary transition-[width] duration-300 ease-out"
             style={{ width: `${pct}%` }}
           />
         </div>
-        <p className="mt-2 text-sm text-zinc-600">
-          <span className="font-medium tabular-nums text-zinc-800">{pct}%</span>{" "}
+        <p className="mt-3 text-sm text-muted-foreground">
+          <span className="font-medium tabular-nums text-foreground">{pct}%</span>{" "}
           of the course
         </p>
       </div>

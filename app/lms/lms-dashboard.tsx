@@ -28,51 +28,51 @@ export function LmsDashboard({
   }, [initialSession, setSession]);
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-semibold text-zinc-900">Dashboard</h1>
-        <p className="mt-1 text-zinc-600">
+    <div className="space-y-12">
+      <div className="space-y-3">
+        <h1 className="text-2xl font-semibold text-foreground">Dashboard</h1>
+        <p className="text-muted-foreground">
           {name ? (
             <>
-              Welcome, <span className="font-medium text-zinc-800">{name}</span>
+              Welcome, <span className="font-medium text-foreground">{name}</span>
               .
             </>
           ) : (
             "Welcome to your learning space."
           )}
         </p>
-        <p className="mt-2 text-sm text-zinc-500">
+        <p className="text-sm text-muted-foreground">
           Session is simulated (cookie + local storage). This is a prototype.
         </p>
       </div>
 
       <LmsProgressSummary />
 
-      <section>
-        <h2 className="text-lg font-medium text-zinc-900">Lessons</h2>
-        <ul className="mt-3 divide-y divide-zinc-200 rounded-xl border border-zinc-200 bg-white">
+      <section className="space-y-5">
+        <h2 className="text-lg font-medium text-foreground">Lessons</h2>
+        <ul className="divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card">
           {LESSONS.map((lesson) => {
             const done = completedLessonIds.includes(lesson.id);
             return (
               <li key={lesson.id}>
                 <Link
                   href={`/lms/lesson/${lesson.id}`}
-                  className="flex items-start gap-3 px-4 py-4 transition hover:bg-zinc-50"
+                  className="flex items-start gap-4 px-5 py-5 transition hover:bg-muted/60"
                 >
                   <span
-                    className={`mt-0.5 inline-flex h-6 shrink-0 items-center rounded-full px-2 text-xs font-medium ${
+                    className={`mt-0.5 inline-flex h-6 shrink-0 items-center rounded-full px-2.5 text-xs font-medium ${
                       done
-                        ? "bg-emerald-100 text-emerald-800"
-                        : "bg-zinc-100 text-zinc-600"
+                        ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200"
+                        : "bg-muted text-muted-foreground"
                     }`}
                   >
                     {done ? "Done" : "Open"}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="font-medium text-zinc-900">
+                    <span className="font-medium text-card-foreground">
                       {lesson.title}
                     </span>
-                    <span className="mt-0.5 block text-sm text-zinc-600">
+                    <span className="mt-1 block text-sm text-muted-foreground">
                       {lesson.summary}
                     </span>
                   </span>

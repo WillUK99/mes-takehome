@@ -14,60 +14,65 @@ export default function ProductsPage() {
   );
 
   return (
-    <div className="mx-auto flex min-h-full max-w-2xl flex-col gap-8 px-4 py-12">
-      <header className="space-y-2">
-        <p className="text-sm font-medium text-zinc-500">
-          <Link href="/" className="hover:text-zinc-800">
+    <div className="mx-auto flex min-h-full max-w-2xl flex-col gap-12 px-4 py-16 sm:px-6 sm:py-20">
+      <header className="space-y-3">
+        <p className="text-sm font-medium text-muted-foreground">
+          <Link href="/" className="transition hover:text-brand">
             MyEdSpace
           </Link>
         </p>
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-900">
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground">
           Choose a course
         </h1>
-        <p className="text-zinc-600">
+        <p className="text-muted-foreground">
           Select one course and enter your email to complete checkout (demo).
         </p>
       </header>
 
-      <ul className="grid gap-4 sm:grid-cols-1">
+      <ul className="grid gap-5 sm:grid-cols-1">
         {COURSES.map((course) => (
           <li
             key={course.id}
-            className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm"
+            className="rounded-2xl border border-border bg-card p-6 shadow-sm"
           >
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <h2 className="text-lg font-medium text-zinc-900">
+              <h2 className="text-lg font-medium text-card-foreground">
                 {course.title}
               </h2>
-              <span className="text-lg font-semibold text-zinc-900">
+              <span className="text-lg font-semibold text-card-foreground">
                 £{course.priceGbp}
               </span>
             </div>
-            <p className="mt-1 text-sm text-zinc-600">{course.yearRange}</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {course.yearRange}
+            </p>
           </li>
         ))}
       </ul>
 
       {/* TODO: move from out to its own component and use tanstack form for validation */}
-      <form action={formAction} className="space-y-4 rounded-xl border border-zinc-200 bg-zinc-50/80 p-6">
-        <fieldset className="space-y-3">
-          <legend className="text-sm font-medium text-zinc-800">
+      <form
+        action={formAction}
+        className="space-y-6 rounded-2xl border border-border bg-muted/80 p-8"
+      >
+        <fieldset className="space-y-4">
+          <legend className="text-sm font-medium text-foreground">
             Course
           </legend>
           <div className="space-y-2">
             {COURSES.map((course) => (
               <label
                 key={course.id}
-                className="flex cursor-pointer items-center gap-3 rounded-lg border border-transparent px-2 py-2 hover:bg-white has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-zinc-400"
+                className="flex cursor-pointer items-center gap-3 rounded-xl border border-transparent px-3 py-2.5 transition hover:bg-card has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-brand/40"
               >
                 <input
                   type="radio"
                   name="courseId"
                   value={course.id}
                   required
-                  className="size-4 border-zinc-300 text-zinc-900"
+                  className="size-4 border-border text-primary"
                 />
-                <span className="text-sm text-zinc-800">
+                <span className="text-sm text-foreground">
                   {course.title} — {course.yearRange}
                 </span>
               </label>
@@ -78,7 +83,7 @@ export default function ProductsPage() {
         <div>
           <label
             htmlFor="parentEmail"
-            className="block text-sm font-medium text-zinc-800"
+            className="block text-sm font-medium text-foreground"
           >
             Parent email
           </label>
@@ -89,7 +94,7 @@ export default function ProductsPage() {
             required
             autoComplete="email"
             placeholder="parent@example.com"
-            className="mt-1 w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-zinc-500 focus:ring-2 focus:ring-zinc-400"
+            className="mt-2 w-full rounded-xl border border-border bg-card px-3 py-2.5 text-sm text-foreground shadow-sm outline-none transition focus:border-primary focus:ring-2 focus:ring-brand/35"
           />
         </div>
 
@@ -100,15 +105,15 @@ export default function ProductsPage() {
         )}
 
         {state.status === "success" && (
-          <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-100">
             <p className="font-medium">Purchase recorded (demo).</p>
-            <p className="mt-1 break-all text-emerald-800">
+            <p className="mt-2 break-all text-emerald-800 dark:text-emerald-200">
               Invitation link:{" "}
               <a href={state.invitationUrl} className="underline">
                 {state.invitationUrl}
               </a>
             </p>
-            <p className="mt-2 text-xs text-emerald-700">
+            <p className="mt-3 text-xs text-emerald-700 dark:text-emerald-300">
               The link was also logged in the server terminal.
             </p>
           </div>
@@ -117,7 +122,7 @@ export default function ProductsPage() {
         <button
           type="submit"
           disabled={pending}
-          className="w-full rounded-lg bg-zinc-900 px-4 py-2.5 text-sm font-medium text-white shadow hover:bg-zinc-800 disabled:opacity-60"
+          className="w-full rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground shadow-sm transition hover:bg-primary-hover disabled:opacity-60"
         >
           {pending ? "Processing…" : "Mock checkout"}
         </button>
