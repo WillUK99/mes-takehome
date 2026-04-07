@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getInvitationByToken } from "@/lib/server/invitations";
-import { OnboardingForm } from "@/app/onboarding/[token]/onboarding-form";
+import { OnboardingForm } from "@/app/onboarding/[token]/_lib/components/onboarding-form";
 
 type PageProps = { params: Promise<{ token: string }> };
 

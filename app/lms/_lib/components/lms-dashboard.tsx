@@ -61,8 +61,8 @@ export function LmsDashboard({
                 >
                   <span
                     className={`mt-0.5 inline-flex h-6 shrink-0 items-center rounded-full px-2.5 text-xs font-medium ${done
-                        ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200"
-                        : "bg-muted text-muted-foreground"
+                      ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200"
+                      : "bg-muted text-muted-foreground"
                       }`}
                   >
                     {done ? "Done" : "Open"}

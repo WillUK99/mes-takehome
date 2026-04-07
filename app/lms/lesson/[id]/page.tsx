@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLessonById } from "@/lib/services/lessons";
-import { LessonCompletePanel } from "./lesson-complete-panel";
+import { LessonCompletePanel } from "./_lib/components/lesson-complete-panel";
 
 type PageProps = { params: Promise<{ id: string }> };
 

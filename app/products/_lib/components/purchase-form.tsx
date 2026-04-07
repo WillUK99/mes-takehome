@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   purchaseAction,
   type PurchaseActionState,
-} from "@/app/products/actions";
+} from "@/app/products/_lib/actions/purchase-action";
 import { COURSES } from "@/lib/constants/courses";
 import {
   purchaseFormSchema,

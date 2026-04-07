@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { SESSION_COOKIE_NAME } from "@/lib/constants/session";
 import { getStudentById } from "@/lib/server/memory-store";
-import { LmsDashboard } from "./lms-dashboard";
+import { LmsDashboard } from "./_lib/components/lms-dashboard";
 
 export default async function LmsPage() {
   const cookieStore = await cookies();

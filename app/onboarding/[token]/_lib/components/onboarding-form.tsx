@@ -7,7 +7,7 @@ import Link from "next/link";
 import {
   completeOnboardingAction,
   type OnboardingActionState,
-} from "@/app/onboarding/[token]/actions";
+} from "../actions/complete-onboarding-action";
 import {
   onboardingFormSchema,
   type OnboardingFormInput,

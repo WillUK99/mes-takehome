@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PurchaseForm } from "@/app/products/purchase-form";
+import { PurchaseForm } from "@/app/products/_lib/components/purchase-form";
 
 export default function ProductsPage() {
   return (
