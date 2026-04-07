@@ -55,6 +55,16 @@ All data lives in an in-memory `Map` via `globalThis` for prototype simplicity (
 | **Multi-stage Docker build** | Standalone output (~150MB image vs ~1GB); non-root user; layer caching for deps |
 | **Tailwind CSS v4** | Design tokens via CSS variables; dark mode support; consistent component styling |
 
+### Production Considerations
+
+| Area | Prototype | Production |
+|------|-----------|------------|
+| **Authentication** | Naive session cookie + in-memory store (auth not required per brief) | [better-auth](https://github.com/better-auth/better-auth) — excellent DX with batteries-included features (OAuth, MFA, sessions) |
+| **Database** | In-memory `Map` via `globalThis` | PostgreSQL with [Drizzle ORM](https://orm.drizzle.team/) — prefer the DX over Prisma/Sequelize for type-safe queries |
+| **Backend architecture** | Next.js as BFF (backend-for-frontend) | Standalone backend (e.g. Nest.js) alongside Next.js; distributed system with event-driven communication between services |
+| **UI components** | Hand-rolled with Tailwind (copy-paste for speed) | [shadcn/ui](https://ui.shadcn.com/) — accessible, composable primitives that own their code |
+| **Payments** | Mock checkout (no payment processing) | [Paddle](https://www.paddle.com/) over Stripe — acts as merchant of record out of the box (handles tax, compliance); slightly higher fees but less operational overhead |
+
 ## Running Locally
 
 ```bash
