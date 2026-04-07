@@ -79,6 +79,7 @@ export function activateStudent(input: {
   password: string;
 }): { student: Student } | { error: "invalid_or_used" } {
   const store = getStore();
+  console.log(store.invitationsByToken);
   const invitation = store.invitationsByToken.get(input.token);
   if (!invitation || invitation.studentId) {
     return { error: "invalid_or_used" };

@@ -11,7 +11,6 @@ export interface Invitation {
   token: string;
   purchaseId: string;
   courseId: CourseId;
-  /** Set after student completes onboarding */
   studentId: string | null;
   createdAt: string;
 }
@@ -21,7 +20,6 @@ export interface Student {
   invitationToken: string;
   courseId: CourseId;
   name: string;
-  /** for prototyping only — not secure */
   password: string;
   createdAt: string;
 }
